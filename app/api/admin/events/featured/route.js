@@ -33,7 +33,11 @@ export async function GET(request) {
       },
     });
 
-    return NextResponse.json(events);
+    return NextResponse.json(events, {
+      headers: {
+        "Cache-Control": "no-store, must-revalidate", // 👈 disable caching
+      },
+    });
   } catch (error) {
     console.error("Events fetch error:", error);
     return NextResponse.json(
