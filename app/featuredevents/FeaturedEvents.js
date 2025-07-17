@@ -3,29 +3,29 @@
 import SolutionCard from "@/components/solutions/SolutionCard"; // adjust path accordingly
 import React, { useEffect, useState } from "react";
 
-const featuredEvents = [
-  {
-    id: "1",
-    title: "Beach Cleanup",
-    description:
-      "Join us for a beach cleaning activity this weekend! Help preserve our coastline and make a difference.",
-    imageUrl: "/images/beach-cleanup.jpg",
-  },
-  {
-    id: "2",
-    title: "River Restoration",
-    description:
-      "Volunteer with us to restore our local river ecosystem. Plant trees, remove debris, and improve the habitat for wildlife.",
-    imageUrl: "/images/river-restoration.jpg",
-  },
-  {
-    id: "3",
-    title: "Community Gardening",
-    description:
-      "Get your hands dirty and help grow fresh produce in our community garden! No experience necessary - just come prepared to work hard.",
-    imageUrl: "/images/community-gardening.jpg",
-  },
-];
+// const featuredEvents = [
+//   {
+//     id: "1",
+//     title: "Beach Cleanup",
+//     description:
+//       "Join us for a beach cleaning activity this weekend! Help preserve our coastline and make a difference.",
+//     imageUrl: "/images/beach-cleanup.jpg",
+//   },
+//   {
+//     id: "2",
+//     title: "River Restoration",
+//     description:
+//       "Volunteer with us to restore our local river ecosystem. Plant trees, remove debris, and improve the habitat for wildlife.",
+//     imageUrl: "/images/river-restoration.jpg",
+//   },
+//   {
+//     id: "3",
+//     title: "Community Gardening",
+//     description:
+//       "Get your hands dirty and help grow fresh produce in our community garden! No experience necessary - just come prepared to work hard.",
+//     imageUrl: "/images/community-gardening.jpg",
+//   },
+// ];
 
 const FeaturedEventsSection = () => {
   const [events, setEvents] = useState([]);
@@ -39,9 +39,7 @@ const FeaturedEventsSection = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await fetch("/api/admin/events/featured", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        cache: "no-store", // 👈 disables client-side/browser caching
       });
 
       if (response.ok) {
