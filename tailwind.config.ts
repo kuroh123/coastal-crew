@@ -13,6 +13,8 @@ const config: Config = {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+        'teal-gold-gradient': 'linear-gradient(to right, rgb(1, 211, 178, 0.4), rgb(255, 192, 0, 0.4))',
+        'gold-teal-gradient': 'linear-gradient(to left, rgb(1, 211, 178, 0.4), rgb(255, 192, 0, 0.4))',
       },
       borderRadius: {
         lg: 'var(--radius)',

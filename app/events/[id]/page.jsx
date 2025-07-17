@@ -1,7 +1,8 @@
 "use client";
-// coastal-crew/app/events/[id]/page.jsx
+
 import React, { useEffect, useState } from "react";
 import Navbar from "@/components/common/Navbar";
+import EventDetail from "@/components/events/EventDetail";
 
 export default function EventDetailPage({ params }) {
   const { id } = params;
@@ -9,9 +10,7 @@ export default function EventDetailPage({ params }) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (id) {
-      fetchEvent();
-    }
+    if (id) fetchEvent();
   }, [id]);
 
   const fetchEvent = async () => {
@@ -25,8 +24,9 @@ export default function EventDetailPage({ params }) {
 
       if (response.ok) {
         const data = await response.json();
-        console.log("Event data:", data);
         setEvent(data);
+      } else {
+        console.error("Failed to fetch event");
       }
     } catch (error) {
       console.error("Error fetching event:", error);
@@ -35,57 +35,16 @@ export default function EventDetailPage({ params }) {
     }
   };
 
-  // Sample data for demonstration purposes, replace with your own data source
-  // const events = [
-  //   {
-  //     id: '1',
-  //     title: 'Beach Cleanup Event',
-  //     description: 'Join us for a beach cleanup event. We will meet at the pier and clean the beach together.',
-  //     // Add more event details here...
-  //   },
-  //   {
-  //     id: '2',
-  //     title: 'Tree Planting Event',
-  //     description: 'Help us plant trees in our local forest to support wildlife and improve air quality.',
-  //     // Add more event details here...
-  //   }
-  //   // Add more events here as needed...
-  // ];
-
-  // const event = events.find(event => event.id === id);
-
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-gray-50">
-        <div className="flex items-center justify-center min-h-screen">
-          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="min-h-screen bg-gray-100">
-      {/* Navbar */}
       <Navbar />
-
-      <div className="container mx-auto py-8">
-        {event ? (
-          <>
-            <h1 className="text-4xl font-bold mb-4">{event.title}</h1>
-            <img
-              src={event.imageUrl}
-              alt={event.title}
-              // width={500}
-              // height={300}
-              className="mb-4 rounded-lg shadow-md"
-            />
-            <p className="text-xl">{event.description}</p>
-          </>
-        ) : (
-          <p>Event not found</p>
-        )}
-      </div>
+      {isLoading ? (
+        <div className="flex items-center justify-center min-h-[60vh]">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600"></div>
+        </div>
+      ) : (
+        <EventDetail event={event} />
+      )}
     </div>
   );
 }

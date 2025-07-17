@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import Navbar from '@/components/common/Navbar'
 import Link from 'next/link'
 import { Waves, Eye, EyeOff, Mail, Lock, User, UserCheck } from 'lucide-react'
 
@@ -73,6 +74,10 @@ export default function Register() {
   }
 
   return (
+        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-teal-50">
+      {/* Navbar */}
+      <Navbar />
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12"></div>
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-teal-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
         <div>
@@ -245,6 +250,7 @@ export default function Register() {
           </div>
         </form>
       </div>
+    </div>
     </div>
   )
 }

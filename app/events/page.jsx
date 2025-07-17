@@ -1,54 +1,73 @@
-// coastal-crew/app/events/[id]/page.jsx
-import React from 'react';
-import Navbar from '@/components/common/Navbar';
+"use client";
 
-const EventDetailPage = ({ params }) => {
-  const { id } = params;
+import React, { useEffect, useState } from "react";
+import Link from "next/link";
+import Navbar from "@/components/common/Navbar";
 
-  // Sample data for demonstration purposes
-  const event = {
-    id,
-    title: 'Beach Cleanup Event',
-    description: 'Join us for a beach cleanup event. We will meet at the pier and clean the beach together.',
-    date: '2023-10-15',
-    time: '9:00 AM - 12:00 PM',
-    location: 'City Beach Park',
-    organizer: 'Green Team',
-    contactEmail: 'greenteam@example.com',
-    contactPhone: '+1 (123) 456-7890',
-    imageUrl: '/images/beach-cleanup.jpg',
-    details: [
-      "Bring your own gloves and reusable bags.",
-      "Meet at the pier entrance.",
-      "Free refreshments provided."
-    ]
+export default function EventsPage() {
+  const [events, setEvents] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchEvents();
+  }, []);
+
+  const fetchEvents = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const res = await fetch("/api/admin/events", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        setEvents(data);
+      } else {
+        console.error("Failed to fetch events");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      {/* Navbar */}
+    <div className="min-h-screen bg-gray-50">
       <Navbar />
+            <div className="container mx-auto px-4 py-10"></div>
+      <div className="container mx-auto px-4 py-10">
+        <h1 className="text-4xl font-bold mb-8 text-center">Upcoming Events</h1>
 
-      <div className="container mx-auto py-8">
-        <h1 className="text-4xl font-bold mb-4">{event.title}</h1>
-        <img src={event.imageUrl} alt={event.title} className="mb-4" />
-        <p className="mb-2"><strong>Date:</strong> {event.date}</p>
-        <p className="mb-2"><strong>Time:</strong> {event.time}</p>
-        <p className="mb-2"><strong>Location:</strong> {event.location}</p>
-        <p className="mb-2"><strong>Organizer:</strong> {event.organizer}</p>
-        <p className="mb-2"><strong>Contact Email:</strong> {event.contactEmail}</p>
-        <p className="mb-2"><strong>Contact Phone:</strong> {event.contactPhone}</p>
-        <h2 className="text-2xl font-bold mt-4">Event Description</h2>
-        <p>{event.description}</p>
-        <h2 className="text-2xl font-bold mt-4">Additional Details</h2>
-        <ul className="list-disc list-inside">
-          {event.details.map((detail, index) => (
-            <li key={index}>{detail}</li>
-          ))}
-        </ul>
+        {loading ? (
+          <div className="flex justify-center items-center min-h-[40vh]">
+            <div className="animate-spin h-12 w-12 border-4 border-green-600 border-t-transparent rounded-full"></div>
+          </div>
+        ) : events.length === 0 ? (
+          <p className="text-center text-gray-500">No events available.</p>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {events.map((event) => (
+              <div
+                key={event._id}
+                className="bg-white p-6 rounded-xl shadow-lg border border-gray-200"
+              >
+                <h2 className="text-2xl font-semibold mb-2">{event.title}</h2>
+                <p className="text-sm text-gray-600 mb-4">{event.date} at {event.time}</p>
+                <p className="text-gray-700 mb-4">{event.description?.slice(0, 100)}...</p>
+                <Link
+                  href={`/events/${event._id}`}
+                  className="text-green-600 font-semibold hover:underline"
+                >
+                  View Details →
+                </Link>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
-};
-
-export default EventDetailPage;
+}

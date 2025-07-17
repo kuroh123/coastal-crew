@@ -1,17 +1,20 @@
 "use client";
 
 import React from 'react';
+import Navbar from '@/components/common/Navbar';
 
 const ContactPage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission logic here  
     alert('Message sent!');
-    // Reset form or perform other actions as needed
     e.target.reset();
   };
 
   return (
+        <div className="min-h-screen bg-teal-100">
+      {/* Navbar */}
+      <Navbar />
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12"></div>
     <div className="min-h-screen bg-gradient-to-b from-teal-100 to-white flex items-center justify-center">
       <div className="container mx-auto py-12">
         <h1 className="text-5xl font-extrabold text-center mb-8 text-teal-700">Contact Us</h1>
@@ -45,6 +48,7 @@ const ContactPage = () => {
           </button>
         </form>
       </div>
+    </div>
     </div>
   );
 };

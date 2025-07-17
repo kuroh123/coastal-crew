@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import Navigation from '@/components/ui/navigation'
 import AuthGuard from '@/components/ui/auth-guard'
-import { Calendar, CheckCircle, Clock, MapPin, Users } from 'lucide-react'
+import { Calendar, CheckCircle, Clock, MapPin, Users, Leaf } from 'lucide-react'
 import Link from 'next/link'
 
 export default function VolunteerDashboard() {
@@ -15,6 +15,7 @@ export default function VolunteerDashboard() {
   const [upcomingEvents, setUpcomingEvents] = useState([])
   const [recentEvents, setRecentEvents] = useState([])
   const [isLoading, setIsLoading] = useState(true)
+  const [ecoTokens, setEcoTokens] = useState(0)
 
   useEffect(() => {
     fetchDashboardData()
@@ -34,6 +35,7 @@ export default function VolunteerDashboard() {
         setStats(data.stats)
         setUpcomingEvents(data.upcomingEvents)
         setRecentEvents(data.recentEvents)
+        setEcoTokens(data.ecoTokens ?? 0) // expects ecoTokens from API
       }
     } catch (error) {
       console.error('Error fetching dashboard data:', error)
@@ -63,6 +65,13 @@ export default function VolunteerDashboard() {
       icon: Clock,
       color: 'bg-orange-500',
       textColor: 'text-orange-600'
+    },
+    {
+      title: 'EcoTokens',
+      value: ecoTokens,
+      icon: Leaf,
+      color: 'bg-teal-500',
+      textColor: 'text-teal-600'
     }
   ]
 
@@ -81,9 +90,9 @@ export default function VolunteerDashboard() {
 
   return (
     <AuthGuard requiredRole="VOLUNTEER">
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-gradient-to-b from-gray-400 to-teal-100">
         <Navigation />
-        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="mb-8">
             <h1 className="text-3xl font-bold text-gray-900">Volunteer Dashboard</h1>
@@ -91,7 +100,7 @@ export default function VolunteerDashboard() {
           </div>
 
           {/* Stats Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
             {statCards.map((card, index) => (
               <div key={index} className="bg-white rounded-lg shadow-md p-6">
                 <div className="flex items-center justify-between">
@@ -103,6 +112,17 @@ export default function VolunteerDashboard() {
                     <card.icon className="w-6 h-6 text-white" />
                   </div>
                 </div>
+                {/* Show redeem button only for EcoTokens card */}
+                {card.title === 'EcoTokens' && (
+                  <div className="mt-4 flex justify-center">
+                    <Link
+                      href="/volunteer/redeem-shop"
+                      className="bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-full font-semibold transition-colors text-sm"
+                    >
+                      Redeem EcoTokens
+                    </Link>
+                  </div>
+                )}
               </div>
             ))}
           </div>

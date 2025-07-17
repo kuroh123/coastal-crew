@@ -32,7 +32,7 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav className="bg-gradient-to-r from-teal-600 via-green-500 to-teal-600 p-4 px-8 transition-colors duration-300">
+    <nav className="fixed top-6 left-1/2 transform -translate-x-1/2 z-50 w-[95%] max-w-6xl rounded-full backdrop-blur-sm bg-black/10 border border-white/20 shadow-md px-6 py-2 flex justify-between items-center">
       <div className="container mx-auto flex justify-between items-center">
         <Link href="/" className="flex items-center text-white text-lg font-bold transition-all duration-300">
           <span className="flex items-center space-x-2">

@@ -17,7 +17,7 @@ const Feature = ({ icon: Icon, title, description }) => (
 
 const FeaturesSection = () => {
   return (
-    <section className="py-16 bg-gray-50">
+    <section className="py-16 bg-gold-teal-gradient">
       <div className="container mx-auto text-center mb-8">
         <h2 className="text-3xl font-bold">Key Features</h2>
         <p className="mt-4 text-xl text-gray-700">

@@ -115,9 +115,9 @@ export default function AdminEvents() {
 
   return (
     <AuthGuard requiredRole="ADMIN">
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-gradient-to-b from-gray-400 to-teal-100">
         <Navigation />
-        
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           {/* Header */}
           <div className="mb-8">
