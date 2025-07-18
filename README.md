@@ -1,3 +1,12 @@
+# Test Credentials - 
+Admin
+- email - admin@gmail.com
+- password - admin
+
+Volunteer
+- email - vol@gmail.com
+- password - vol
+
 # Beach Cleanup Management System
 
 A comprehensive web application for organizing and managing beach cleanup events, built with Next.js, Prisma, and PostgreSQL. This system provides separate portals for administrators and volunteers to streamline event management and participation.
